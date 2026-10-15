@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1525">
+  <meta name="description" content="A beginner-friendly five-round game concept card challenge for an Open Day. Choose a mystery card, build your brief and start a countdown.">
+  <title>Game Concept Challenge | Open Day</title>
+  <link rel="stylesheet" href="style.css?v=2.0.0">
+</head>
+<body>
+<div class="app">
+  <header class="masthead">
+    <div class="brand"><div class="brand-mark" aria-hidden="true">◆</div> Open Day · Game Concept Challenge</div>
+    <div class="header-right">
+      <div class="edition">STARTER EDITION <span class="edition-dot">·</span> FOUR CARDS PER ROUND</div>
+      <button id="restart-anytime" class="header-restart" type="button" hidden>↻ Restart</button>
+    </div>
+  </header>
+  <noscript><p>This activity needs JavaScript enabled in your browser.</p></noscript>
+  <main id="main">
+    <!-- 0: Welcome -->
+    <section id="welcome" class="screen welcome center" aria-labelledby="welcome-title">
+      <div class="eyebrow">Your design adventure starts here</div>
+      <h1 id="welcome-title" class="heading">Five choices.<br><span class="highlight">One game idea.</span></h1>
+      <p class="lead">Pick one mystery card from each of five groups. Discover your unique game-design challenge — no games experience needed.</p>
+      <div class="steps" aria-label="The five card categories">
+        <span class="pill"><span class="pill-dot"></span> Genre</span>
+        <span class="pill"><span class="pill-dot"></span> Audience</span>
+        <span class="pill"><span class="pill-dot"></span> Mechanic</span>
+        <span class="pill"><span class="pill-dot"></span> Visual Style</span>
+        <span class="pill"><span class="pill-dot"></span> Constraint</span>
+      </div>
+      <div class="actions"><button id="begin" class="btn btn-primary" type="button">Start the challenge →</button></div>
+      <p class="micro">Choose a number · Flip the card · Reveal your prompt · Move to the next round</p>
+    </section>
+
+    <!-- 1: 4 cards for each category -->
+    <section id="pick" class="screen pick center" aria-labelledby="round-title" hidden>
+      <div id="progress" class="progress" aria-label="Round progress"></div>
+      <div class="eyebrow" id="round-eyebrow">Round 1 of 5</div>
+      <h2 id="round-title" class="heading">Choose your genre</h2>
+      <p id="round-help" class="lead">Pick one of the four cards to reveal what your game could be.</p>
+      <div id="card-grid" class="card-grid" aria-label="Four mystery cards"></div>
+      <div id="reveal" class="reveal" aria-live="polite" hidden>
+        <div><strong id="reveal-title"></strong><p id="reveal-description"></p></div>
+        <button id="view-art" type="button" class="small-btn">View full card ↗</button>
+      </div>
+      <div class="actions pick-actions">
+        <button id="round-next" class="btn btn-primary" type="button" hidden>Next round →</button>
+      </div>
+      <p class="micro">Only the large card title is required; the smaller artwork text is optional inspiration.</p>
+    </section>
+
+    <!-- 2: Final brief -->
+    <section id="results" class="screen results center" aria-labelledby="results-title" hidden>
+      <div class="eyebrow">Your five choices</div>
+      <h2 id="results-title" class="heading">Here's your <span class="highlight">game-design brief.</span></h2>
+      <p class="lead">Combine these five ideas into one simple game concept. There's no single correct answer!</p>
+      <div id="brief-grid" class="brief-grid" aria-label="Your five complete card images"></div>
+      <p class="brief-hint">All original card details are shown. Select any card to enlarge and read its Design DNA, game guidance and design limitation.</p>
+      <div class="idea-box">
+        <h3>Your mission</h3>
+        <p>Think of a <strong>game title</strong>, explain <strong>what the player does</strong> and decide <strong>how your choices fit together</strong>.</p>
+      </div>
+      <div class="actions"><button id="go-ready" class="btn btn-primary" type="button">Are you ready? →</button></div>
+    </section>
+
+    <!-- 3: Are You Ready? -->
+    <section id="ready" class="screen ready center" aria-labelledby="ready-title" hidden>
+      <div class="eyebrow">Your game starts with an idea</div>
+      <h2 id="ready-title" class="heading">ARE YOU <span class="highlight">READY?</span></h2>
+      <p class="lead">You have your five choices. Work as a mini game-design team: agree on a title, describe what happens and explain why your idea would be fun.</p>
+      <div id="ready-chips" class="choice-chips"></div>
+      <div class="actions"><button id="go-timer" class="btn btn-warm" type="button">Yes! Set the timer →</button></div>
+    </section>
+
+    <!-- 4: Countdown -->
+    <section id="timer" class="screen timer center" aria-labelledby="timer-title" hidden>
+      <div class="eyebrow">Game design workshop</div>
+      <h2 id="timer-title" class="heading">Your time starts <span class="highlight">now.</span></h2>
+      <p class="lead">Choose a duration, then start the real-time countdown.</p>
+      <div class="timer-panel">
+        <div id="timer-display" class="timer-face" role="timer" aria-live="off">15:00</div>
+        <div id="timer-status" class="timer-status" aria-live="polite">Ready when you are</div>
+        <div class="timer-settings" id="timer-settings">
+          <label for="minutes">Minutes</label>
+          <input class="minutes-input" id="minutes" type="number" min="1" max="180" step="1" value="15" inputmode="numeric">
+          <button class="preset" data-minutes="10" type="button">10 min</button>
+          <button class="preset selected" data-minutes="15" type="button">15 min</button>
+          <button class="preset" data-minutes="20" type="button">20 min</button>
+        </div>
+        <div class="actions">
+          <button id="start-timer" class="btn btn-primary" type="button">Start countdown</button>
+          <button id="pause-timer" class="btn btn-secondary" type="button" hidden>Pause</button>
+          <button id="resume-timer" class="btn btn-primary" type="button" hidden>Resume</button>
+          <button id="reset-timer" class="btn btn-quiet" type="button">Reset</button>
+        </div>
+        <p class="micro timer-hint">The countdown stays accurate even if you switch browser tabs.</p>
+      </div>
+      <div class="actions timer-nav"><button id="new-challenge" class="btn btn-quiet" type="button">↻ Start a new challenge</button></div>
+    </section>
+  </main>
+  <footer class="footer">Open Day · Beginners' Game Concept Card Challenge · Works offline and on GitHub Pages</footer>
+</div>
+
+<dialog class="art-dialog" id="art-dialog" aria-label="Selected card artwork">
+  <div class="dialog-bar"><strong id="art-title">Selected card</strong>
+    <div class="dialog-actions"><button id="zoom-art" class="small-btn" type="button" aria-pressed="false">Zoom in to read</button><button id="close-art" class="small-btn" type="button">Close ✕</button></div></div>
+  <img id="art-img" src="" alt="Full original card artwork">
+  <p class="dialog-tip">Fit view shows the entire card. Zoom in to read allows scrolling through the design details.</p>
+</dialog>
+
+<script src="cards.js?v=2.0.0" defer></script>
+<script src="game.js?v=2.0.0" defer></script>
+</body>
+</html>
