@@ -151,6 +151,29 @@ let timerInterval = null;
 let timerMode = 'idle'; // idle | running | paused | finished
 let endAtMs = 0;
 let remainingMs = 15*60000;
+// A single cheerful finish sound. Prime the local audio on the Start button
+// to meet browsers' user-interaction playback policies.
+const finishSound = $('timer-finish-sound');
+function prepareFinishSound() {
+  finishSound.muted = true;
+  const attempt = finishSound.play();
+  if (attempt && typeof attempt.then === 'function') {
+    attempt.then(() => { finishSound.pause(); finishSound.currentTime = 0; finishSound.muted = false; })
+      .catch(() => { finishSound.muted = false; });
+  } else { finishSound.pause(); finishSound.currentTime = 0; finishSound.muted = false; }
+}
+function playFinishSound() {
+  finishSound.pause();
+  finishSound.currentTime = 0;
+  finishSound.muted = false;
+  const attempt = finishSound.play();
+  if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {});
+}
+function stopFinishSound() {
+  finishSound.pause();
+  finishSound.currentTime = 0;
+}
+
 function validMinutes() {
   const n=Number($('minutes').value);
   if(!Number.isInteger(n) || n<1 || n>180){
@@ -182,7 +205,7 @@ function drawTimerControls() {
   });
 }
 function resetTimerState() {
-  stopInterval(); timerMode='idle'; endAtMs=0;
+  stopInterval(); stopFinishSound(); timerMode='idle'; endAtMs=0;
   remainingMs=validMinutes()*60000;
   updateTime(remainingMs);
   setTimerStatus('Ready when you are');
@@ -193,11 +216,14 @@ function tick() {
   remainingMs=Math.max(0,endAtMs-Date.now());
   updateTime(remainingMs);
   if(remainingMs<=0){
-    timerMode='finished';stopInterval();setTimerStatus("TIME'S UP!",true);drawTimerControls();
+    timerMode='finished';stopInterval();
+    setTimerStatus("TIME'S UP! 🎉 Get ready to present your game!",true);
+    drawTimerControls();playFinishSound();
   }
 }
 function startTimer() {
   if(timerMode!=='idle')return;
+  prepareFinishSound();
   remainingMs=validMinutes()*60000;
   endAtMs=Date.now()+remainingMs;
   timerMode='running';setTimerStatus('Countdown running');drawTimerControls();

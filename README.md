@@ -64,6 +64,9 @@ All four cards appear in every category, with randomly shuffled positions. One c
 
 - Counts down in `MM:SS`, for example 15:00 → 14:59 → 14:58.
 - Start, Pause, Resume and Reset are supported.
+- Silent during countdown; plays a short, cheerful `timer-finish.wav` flourish once at 00:00 for any chosen duration.
+- At completion, displays “TIME’S UP! 🎉 Get ready to present your game!”; reset silences the sound.
+- Sound playback depends on browser audio permissions, device volume and the tab remaining open.
 - Uses a real-time deadline (`Date.now()`), which avoids a countdown drifting while the browser tab is inactive.
 - A countdown does **not** survive a full page refresh or closing the browser.
 
